@@ -7,13 +7,14 @@
 const int SPI_CS_PIN = 9;
 const int LED=5;
 
+unsigned char Prog[8] = {0xff,0x00,0,0,0,0x01,0x02,0x03};
 unsigned char onR1_onR2[8] = {0x01,0x11,0,0,0,0,0,0};
 unsigned char offR1_offR2[8] = {0x01,0x00,0,0,0,0,0,0};
 unsigned char onR1_offR2[8] = {0x01,0x01,0,0,0,0,0,0};
 unsigned char offR1_onR2[8] = {0x01,0x10,0,0,0,0,0,0};
 
-unsigned char ID_Local=0x03;
-unsigned char ID_Master=0x01;
+unsigned char ID_Local=0x02;
+unsigned char ID_Master=0x00;
 
 MCP_CAN CAN(SPI_CS_PIN);                                    // Set CS pin
 
@@ -22,6 +23,7 @@ void setup()
     Serial.begin(9600);
      pinMode(LED,OUTPUT);
      digitalWrite(LED,LOW);
+  
 
 START_INIT:
 
@@ -35,6 +37,9 @@ START_INIT:
            digitalWrite(LED,true);
            delay(200);
            digitalWrite(LED,false);
+            delay(200);
+            
+                CAN.sendMsgBuf(ID_Master,0, 8,Prog);
     }
     else
     {
@@ -59,22 +64,22 @@ START_INIT:
 
 void loop()
 {   
-    CAN.sendMsgBuf(ID_Master,0, 8,onR1_offR2);
+  /*  CAN.sendMsgBuf(ID_Master,0, 8,onR1_offR2);
       Led_mensaje_enviado_blink();
    
-    delay(1000);
+    delay(1000);*/
   
     CAN.sendMsgBuf(ID_Master,0, 8, onR1_onR2);
       Led_mensaje_enviado_blink();
     
-     delay(1000);  
-       CAN.sendMsgBuf(ID_Master,0, 8, offR1_onR2);
+     delay(10000);  
+    /*   CAN.sendMsgBuf(ID_Master,0, 8, offR1_onR2);
        Led_mensaje_enviado_blink();
-    delay(1000);                       // send data per 100ms
+    delay(1000);   */                    // send data per 100ms
      CAN.sendMsgBuf(ID_Master,0, 8, offR1_offR2);
                         // send data per 100ms
       Led_mensaje_enviado_blink();
-     delay(1000);  
+     delay(5000);  
 }
 
 
