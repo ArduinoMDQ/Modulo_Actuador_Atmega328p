@@ -39,7 +39,7 @@ START_INIT:
            digitalWrite(LED,false);
             delay(200);
             
-                CAN.sendMsgBuf(ID_Master,0, 8,Prog);
+                CAN.sendMsgBuf(ID_Local,0, 8,Prog);
     }
     else
     {
@@ -64,32 +64,47 @@ START_INIT:
 
 void loop()
 {   
-  /*  CAN.sendMsgBuf(ID_Master,0, 8,onR1_offR2);
-      Led_mensaje_enviado_blink();
+    CAN.sendMsgBuf(ID_Local,0, 8,onR1_offR2);
+      Led_mensaje_enviado_blink_uno();
    
-    delay(1000);*/
+    delay(3000);
   
-    CAN.sendMsgBuf(ID_Master,0, 8, onR1_onR2);
+  /*  CAN.sendMsgBuf(ID_Master,0, 8, onR1_onR2);
       Led_mensaje_enviado_blink();
     
-     delay(10000);  
-    /*   CAN.sendMsgBuf(ID_Master,0, 8, offR1_onR2);
-       Led_mensaje_enviado_blink();
-    delay(1000);   */                    // send data per 100ms
-     CAN.sendMsgBuf(ID_Master,0, 8, offR1_offR2);
+     delay(3000);  */
+      CAN.sendMsgBuf(ID_Local,0, 8, offR1_onR2);
+       Led_mensaje_enviado_blink_dos();
+    delay(3000);                     // send data per 100ms
+
+    
+     CAN.sendMsgBuf(ID_Local,0, 8, offR1_offR2);
                         // send data per 100ms
-      Led_mensaje_enviado_blink();
+     Led_mensaje_enviado_blink_OFF();
      delay(5000);  
 }
 
 
- void Led_mensaje_enviado_blink(){
+ void Led_mensaje_enviado_blink_uno(){
           digitalWrite(LED,true);
-          delay(50);
+          delay(100);
           digitalWrite(LED,false);  
   }
 
-
+void Led_mensaje_enviado_blink_dos(){
+          digitalWrite(LED,true);
+          delay(100);
+          digitalWrite(LED,false);
+          delay(100);  
+          digitalWrite(LED,true);
+          delay(100);
+          digitalWrite(LED,false);  
+  }
+ void Led_mensaje_enviado_blink_OFF(){
+          digitalWrite(LED,true);
+          delay(500);
+          digitalWrite(LED,false);  
+  }
 
 /*********************************************************************************************************
   END FILE
