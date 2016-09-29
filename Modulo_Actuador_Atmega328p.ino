@@ -8,10 +8,11 @@ const int SPI_CS_PIN = 9;
 const int LED=5;
 
 unsigned char Prog[8] = {0xff,0x00,0,0,0,0x01,0x02,0x03};
-unsigned char onR1_onR2[8] = {0x01,0x11,0,0,0,0,0,0};
+
+unsigned char onR1_onR2[8]   = {0x01,0x11,0,0,0,0,0,0};
 unsigned char offR1_offR2[8] = {0x01,0x00,0,0,0,0,0,0};
-unsigned char onR1_offR2[8] = {0x01,0x01,0,0,0,0,0,0};
-unsigned char offR1_onR2[8] = {0x01,0x10,0,0,0,0,0,0};
+unsigned char onR1_offR2[8]  = {0x01,0x01,0,0,0,0,0,0};
+unsigned char offR1_onR2[8]  = {0x01,0x10,0,0,0,0,0,0};
 
 unsigned char ID_Local=0x02;
 unsigned char ID_Master=0x00;
@@ -40,6 +41,8 @@ START_INIT:
             delay(200);
             
                 CAN.sendMsgBuf(ID_Local,0, 8,Prog);
+                 CAN.sendMsgBuf(ID_Local,0, 8, offR1_offR2);
+   
     }
     else
     {
@@ -64,24 +67,22 @@ START_INIT:
 
 void loop()
 {   
-    CAN.sendMsgBuf(ID_Local,0, 8,onR1_offR2);
-      Led_mensaje_enviado_blink_uno();
-   
-    delay(3000);
   
-  /*  CAN.sendMsgBuf(ID_Master,0, 8, onR1_onR2);
-      Led_mensaje_enviado_blink();
-    
-     delay(3000);  */
-      CAN.sendMsgBuf(ID_Local,0, 8, offR1_onR2);
-       Led_mensaje_enviado_blink_dos();
-    delay(3000);                     // send data per 100ms
-
-    
-     CAN.sendMsgBuf(ID_Local,0, 8, offR1_offR2);
-                        // send data per 100ms
-     Led_mensaje_enviado_blink_OFF();
-     delay(5000);  
+    CAN.sendMsgBuf(ID_Local,0, 8,onR1_offR2);
+    Led_mensaje_enviado_blink_uno();
+    delay(5000);
+  
+    CAN.sendMsgBuf(ID_Local,0, 8, onR1_onR2);
+     Led_mensaje_enviado_blink_dos();
+    delay(10000);  
+   
+    CAN.sendMsgBuf(ID_Local,0, 8, offR1_onR2);
+    Led_mensaje_enviado_blink_tres();
+    delay(5000);                  
+   
+    CAN.sendMsgBuf(ID_Local,0, 8, offR1_offR2);
+    Led_mensaje_enviado_blink_OFF();
+    delay(5000);  
 }
 
 
@@ -99,6 +100,20 @@ void Led_mensaje_enviado_blink_dos(){
           digitalWrite(LED,true);
           delay(100);
           digitalWrite(LED,false);  
+  }
+void Led_mensaje_enviado_blink_tres(){
+          digitalWrite(LED,true);
+          delay(100);
+          digitalWrite(LED,false);
+          delay(100);  
+          digitalWrite(LED,true);
+          delay(100);
+          digitalWrite(LED,false);  
+          delay(100);
+          digitalWrite(LED,true);
+          delay(100);
+          digitalWrite(LED,false);
+         
   }
  void Led_mensaje_enviado_blink_OFF(){
           digitalWrite(LED,true);
