@@ -40,8 +40,7 @@ START_INIT:
            digitalWrite(LED,false);
             delay(200);
             
-                CAN.sendMsgBuf(ID_Local,0, 8,Prog);
-                 CAN.sendMsgBuf(ID_Local,0, 8, offR1_offR2);
+         CAN.sendMsgBuf(ID_Local,0, 8, offR1_offR2);
    
     }
     else
