@@ -14,7 +14,7 @@ unsigned char offR1_offR2[8] = {0x01,0x00,0,0,0,0,0,0};
 unsigned char onR1_offR2[8]  = {0x01,0x01,0,0,0,0,0,0};
 unsigned char offR1_onR2[8]  = {0x01,0x10,0,0,0,0,0,0};
 
-unsigned char ID_Local=0x02;
+unsigned char ID_Local=0x01;
 unsigned char ID_Master=0x00;
 
 MCP_CAN CAN(SPI_CS_PIN);                                    // Set CS pin
